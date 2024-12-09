@@ -1,33 +1,30 @@
-use reqwest::Proxy;
-use serenity::all::{EventHandler, GatewayIntents};
-use serenity::async_trait;
+use serenity::all::GatewayIntents;
 use serenity::client::Client;
 use songbird::SerenityInit;
 
 mod config;
+mod event_handler;
 mod framework;
+mod logger;
+mod static_clients;
+mod utils;
 
-struct H;
-
-#[async_trait]
-impl EventHandler for H {
-    async fn ready(&self, ctx: serenity::client::Context, _: serenity::model::gateway::Ready) {
-        println!("{} is connected!", ctx.cache.current_user().name);
-    }
-}
+use utils::AnyResult;
 
 #[tokio::main]
-async fn main() {
+async fn main() -> AnyResult {
     let config = config::Config::new();
+    logger::Logger::init(logger::LoggerConfig::default());
 
     let mut client = Client::builder(config.bot_token, GatewayIntents::all())
         .framework(framework::new())
-        .event_handler(H)
+        .event_handler(event_handler::EventHandler::new())
         .register_songbird()
-        .await
-        .unwrap();
+        .await?;
 
-    if let Err(err) = client.start().await {
+    if let Err(err) = client.start_autosharded().await {
         println!("Client error: {}", err);
     }
+
+    Ok(())
 }
