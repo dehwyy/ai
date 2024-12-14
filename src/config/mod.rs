@@ -4,6 +4,9 @@ use envconfig::Envconfig;
 pub struct Config {
     #[envconfig(from = "TOKEN")]
     pub bot_token: String,
+
+    #[envconfig(from = "TTS_API_URL")]
+    pub tts_api_url: String,
 }
 
 impl Config {
