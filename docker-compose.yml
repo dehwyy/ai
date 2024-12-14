@@ -1,0 +1,16 @@
+version: '3'
+services:
+  ai:
+    container_name: ai
+    build:
+      context: api/ai
+      dockerfile: ./Dockerfile
+    ports:
+      - 8001:8001
+  tts:
+    container_name: tts
+    build:
+      context: api/tts
+      dockerfile: ./Dockerfile
+    ports:
+      - 8000:8000

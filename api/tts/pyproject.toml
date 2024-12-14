@@ -1,0 +1,38 @@
+[project]
+authors = [
+  {name = "dehwyy", email = "dehwyyy@gmail.com"},
+]
+dependencies = [
+  "uvicorn>=0.27.1",
+  "litestar>=2.6.1",
+  "python-dotenv>=1.0.1",
+  "numpy>=1.26.3",
+  "torch==2.2.0+cpu; platform_machine == 'x86_64'",
+  "torch==2.2.0; platform_machine != 'x86_64'",
+]
+description = "TTS api server"
+name = "TTS-api-server"
+requires-python = ">=3.9"
+version = "0.0.1"
+
+[tool.rye]
+dev-dependencies = []
+excluded-dependencies = [
+  "polyfactory",
+  "faker",
+  "six",
+  "filelock",
+  "fsspec",
+  "jinja2",
+  "markupsafe",
+  "mpmath",
+  "networkx",
+  "sympy",
+]
+lock-with-sources = true
+managed = true
+virtual = true
+
+[[tool.rye.sources]]
+name = "pytorch"
+url = "https://download.pytorch.org/whl/cpu"

@@ -1,0 +1,8 @@
+version: '3'
+dotenv: [.env]
+
+
+tasks:
+  run:
+    cmds:
+      - docker-compose up --build
